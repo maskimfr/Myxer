@@ -143,6 +143,7 @@ impl SinkMeter {
 				button.set_property_role(gtk::ButtonRole::Radio);
 				//button.set_property_active(v.data.index == index);
 				button.set_property_active(pulse.default_sink == index);
+				button.set_sensitive(pulse.default_sink != index);
 				let button_label = gtk::Label::new(Some(&v.data.description));
 				button_label.set_ellipsize(pango::EllipsizeMode::End);
 				button_label.set_max_width_chars(18);
