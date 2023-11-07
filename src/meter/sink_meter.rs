@@ -131,7 +131,7 @@ impl SinkMeter {
 		});
 		menu.add(&set_default);
 
-		if pulse.sinks.len() >= 2 {
+		// if pulse.sinks.len() >= 2 {
 			menu.pack_start(&gtk::SeparatorMenuItem::new(), false, false, 3);
 
 			let label = gtk::Label::new(Some("Visible Output"));
@@ -141,7 +141,8 @@ impl SinkMeter {
 			for (i, v) in &pulse.sinks {
 				let button = gtk::ModelButton::new();
 				button.set_property_role(gtk::ButtonRole::Radio);
-				button.set_property_active(v.data.index == index);
+				//button.set_property_active(v.data.index == index);
+				button.set_property_active(pulse.default_sink == index);
 				let button_label = gtk::Label::new(Some(&v.data.description));
 				button_label.set_ellipsize(pango::EllipsizeMode::End);
 				button_label.set_max_width_chars(18);
@@ -151,13 +152,17 @@ impl SinkMeter {
 				let root = root.clone();
 				let pulse_clone = pulse_shr.clone();
 				button.connect_clicked(move |_| {
-					pulse_clone.borrow_mut().set_active_sink(i);
+			    //pulse_clone.borrow_mut().set_active_sink(i);
+					pulse_clone.borrow_mut().set_default_sink(i);
+					//set_default.set_property_active(true);
+					//set_default.set_sensitive(false);
+					
 					root.popdown();
 				});
 				
 				menu.add(&button);
 			}
-		}
+		//}
 
 		for child in &root.get_children() { child.show_all(); }
 		root.set_relative_to(Some(trigger));
