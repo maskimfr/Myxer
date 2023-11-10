@@ -125,8 +125,8 @@ impl Myxer {
 			window.set_icon_name(Some("multimedia-volume-control"));
 
 			let geom = gdk::Geometry {
-				min_width: 580, min_height: 400,
-				max_width: 10000, max_height: 400,
+				min_width: 580, min_height: 440,
+				max_width: 1600, max_height: 440,
 				base_width: -1, base_height: -1,
 				width_inc: -1, height_inc: -1,
 				min_aspect: 0.0, max_aspect: 0.0,

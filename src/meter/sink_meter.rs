@@ -117,7 +117,7 @@ impl SinkMeter {
 		// split_channels.set_action_name(Some("app.split_channels"));
 		// menu.add(&split_channels);
 
-		let set_default = gtk::ModelButton::new();
+		/* let set_default = gtk::ModelButton::new();
 		set_default.set_property_role(gtk::ButtonRole::Check);
 		set_default.set_property_text(Some("Set as Default"));
 		set_default.set_property_active(pulse.default_sink == index);
@@ -130,19 +130,24 @@ impl SinkMeter {
 			set_default.set_sensitive(false);
 		});
 		menu.add(&set_default);
-
+    */
+    
 		// if pulse.sinks.len() >= 2 {
-			menu.pack_start(&gtk::SeparatorMenuItem::new(), false, false, 3);
+			//menu.pack_start(&gtk::SeparatorMenuItem::new(), false, false, 3);
 
-			let label = gtk::Label::new(Some("Visible Output"));
+			let label = gtk::Label::new(Some("Default output"));
 			label.set_sensitive(false);
 			menu.pack_start(&label, true, true, 3);
 			
 			for (i, v) in &pulse.sinks {
 				let button = gtk::ModelButton::new();
 				button.set_property_role(gtk::ButtonRole::Radio);
-				//button.set_property_active(v.data.index == index);
-				button.set_property_active(pulse.default_sink == i);
+				println!("TTTTTTTT");
+				println!("i : {0}", i);
+				println!("index : {0}", index);
+				//button.set_property_active(v.data.index == index); // Initial
+				button.set_property_active(pulse.default_sink == v.data.index);
+				//button.set_property_active(pulse.default_sink == i);
 				let button_label = gtk::Label::new(Some(&v.data.description));
 				button_label.set_ellipsize(pango::EllipsizeMode::End);
 				button_label.set_max_width_chars(18);

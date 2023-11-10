@@ -119,7 +119,7 @@ impl SourceMeter {
 		// split_channels.set_action_name(Some("app.split_channels"));
 		// menu.add(&split_channels);
 
-		let set_default = gtk::ModelButton::new();
+		/* let set_default = gtk::ModelButton::new();
 		set_default.set_property_role(gtk::ButtonRole::Check);
 		set_default.set_property_text(Some("Set as Default"));
 		set_default.set_property_active(pulse.default_source == index);
@@ -132,18 +132,20 @@ impl SourceMeter {
 			set_default.set_sensitive(false);
 		});
 		menu.add(&set_default);
+		*/
+		
+		//if pulse.sources.len() >= 2 {
+			//menu.pack_start(&gtk::SeparatorMenuItem::new(), false, false, 3);
 
-		if pulse.sources.len() >= 2 {
-			menu.pack_start(&gtk::SeparatorMenuItem::new(), false, false, 3);
-
-			let label = gtk::Label::new(Some("Visible Input"));
+			let label = gtk::Label::new(Some("Default Input"));
 			label.set_sensitive(false);
 			menu.pack_start(&label, true, true, 3);
 			
 			for (i, v) in &pulse.sources {
 				let button = gtk::ModelButton::new();
 				button.set_property_role(gtk::ButtonRole::Radio);
-				button.set_property_active(v.data.index == index);
+				//button.set_property_active(v.data.index == index);
+				button.set_property_active(pulse.default_source == v.data.index);
 				let button_label = gtk::Label::new(Some(&v.data.description));
 				button_label.set_ellipsize(pango::EllipsizeMode::End);
 				button_label.set_max_width_chars(18);
@@ -153,13 +155,14 @@ impl SourceMeter {
 				let root = root.clone();
 				let pulse_clone = pulse_shr.clone();
 				button.connect_clicked(move |_| {
-					pulse_clone.borrow_mut().set_active_source(i);
+					//pulse_clone.borrow_mut().set_active_source(i);
+					pulse_clone.borrow_mut().set_default_source(i);
 					root.popdown();
 				});
 				
 				menu.add(&button);
 			}
-		}
+		//}
 
 		for child in &root.get_children() { child.show_all(); }
 		root.set_relative_to(Some(trigger));
